@@ -19,8 +19,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     private AssessmentViewModel mAssessmentViewModel;
     private TextView mAssessmentName;
-    private TextView mStartDate;
-    private TextView mEndDate;
+    private TextView mDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +36,11 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         //Get selected term details to populate activity with
         mAssessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
         mAssessmentName = findViewById(R.id.AssessmentName);
-        mStartDate = findViewById(R.id.StartDate);
-        mEndDate = findViewById(R.id.EndDate);
+        mDate = findViewById(R.id.Date);
 
         if(getIntent().getStringExtra("AssessmentName")!=null) {
             mAssessmentName.setText(getIntent().getStringExtra("AssessmentName"));
-            mStartDate.setText(getIntent().getStringExtra("StartDate"));
-            mEndDate.setText(getIntent().getStringExtra("EndDate"));
+            mDate.setText(getIntent().getStringExtra("AssessmentDate"));
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);

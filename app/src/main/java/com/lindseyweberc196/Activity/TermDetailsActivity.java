@@ -62,7 +62,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
-        mCourseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
+        mCourseViewModel.getAssociatedCourses(mTermID).observe(this, new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
                 adapter.setCourses(courses);

@@ -24,6 +24,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private TextView mCourseName;
     private TextView mStartDate;
     private TextView mEndDate;
+    private TextView mNote;
     private int mCourseID;
 
     @Override
@@ -43,11 +44,13 @@ public class CourseDetailsActivity extends AppCompatActivity {
         mCourseName = findViewById(R.id.CourseName);
         mStartDate = findViewById(R.id.StartDate);
         mEndDate = findViewById(R.id.EndDate);
+        mNote = findViewById(R.id.Note);
 
         if(getIntent().getStringExtra("CourseName")!=null) {
             mCourseName.setText(getIntent().getStringExtra("CourseName"));
             mStartDate.setText(getIntent().getStringExtra("StartDate"));
             mEndDate.setText(getIntent().getStringExtra("EndDate"));
+            mNote.setText(getIntent().getStringExtra("Note"));
         }
 
         FloatingActionButton fab = findViewById(R.id.fab);
