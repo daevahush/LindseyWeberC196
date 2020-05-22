@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="64dp"
         android:text="Start Date:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -52,27 +52,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="252dp"
+        android:layout_marginTop="92dp"
         android:text="End Date:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <CalendarView
-        android:id="@+id/StartDate"
-        android:layout_width="294dp"
-        android:layout_height="233dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="16dp"
+    <EditText
+        android:id="@+id/StartDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="56dp"
+        android:ems="10"
+        android:hint="mm/dd/yyyy"
+        android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TermNameTxt" />
 
-    <CalendarView
-        android:id="@+id/EndDate"
-        android:layout_width="296dp"
-        android:layout_height="226dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="12dp"
+    <EditText
+        android:id="@+id/EndDateTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="56dp"
+        android:ems="10"
+        android:hint="mm/dd/yyyy"
+        android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StartDate" />
+        app:layout_constraintTop_toBottomOf="@+id/StartDateTxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
