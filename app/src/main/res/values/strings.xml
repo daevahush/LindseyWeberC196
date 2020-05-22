@@ -20,4 +20,6 @@
     <string name="title_activity_assessments">Assessments</string>
     <string name="title_activity_notes">Notes</string>
     <string name="title_activity_term_details">TermDetailsActivity</string>
+    <string name="title_activity_course_details">CourseDetailsActivity</string>
+    <string name="title_activity_assessment_details">AssessmentDetailsActivity</string>
 </resources>

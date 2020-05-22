@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.lindseyweberc196.Activity.TermsActivity;
+import com.lindseyweberc196.Activity.AssessmentDetailsActivity;
 import com.lindseyweberc196.Entity.Assessment;
 import com.lindseyweberc196.R;
 import java.util.List;
@@ -24,7 +24,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
             itemView.setOnClickListener((v) -> {
                 int position = getAdapterPosition();
                 final Assessment current = mAssessments.get(position);
-                Intent intent = new Intent(context, TermsActivity.class);
+                Intent intent = new Intent(context, AssessmentDetailsActivity.class);
                 intent.putExtra("Assessment ID", current.getAssessmentID());
                 intent.putExtra("Assessment Type", current.getAssessmentType());
                 intent.putExtra("Assessment Name", current.getName());
@@ -35,8 +35,6 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
             });
         }
     }
-
-
 
     private final LayoutInflater mInflater;
     private final Context context;

@@ -7,6 +7,8 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import com.lindseyweberc196.Entity.Assessment;
+import com.lindseyweberc196.Entity.Course;
+
 import java.util.List;
 
 @Dao
@@ -22,4 +24,7 @@ public interface AssessmentDAO {
 
     @Query("SELECT * FROM assessment_table ORDER BY assessmentID ASC")
     LiveData<List<Assessment>> getAllAssessments();
+
+    @Query("SELECT * FROM assessment_table WHERE courseID = :courseID")
+    LiveData<List<Assessment>> getAssociatedAssessments(int courseID);
 }

@@ -14,10 +14,10 @@
         android:text="Term Name:"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/TermNameTxt"/>
+        app:layout_constraintLeft_toRightOf="@+id/AssessmentName"/>
 
     <EditText
-        android:id="@+id/TermNameTxt"
+        android:id="@+id/AssessmentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
-        android:id="@+id/StartDateTxt"
+        android:id="@+id/StartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -67,10 +67,10 @@
         android:hint="mm/dd/yyyy"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TermNameTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/AssessmentName" />
 
     <EditText
-        android:id="@+id/EndDateTxt"
+        android:id="@+id/EndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
@@ -79,6 +79,6 @@
         android:hint="mm/dd/yyyy"
         android:inputType="date"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StartDateTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/StartDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

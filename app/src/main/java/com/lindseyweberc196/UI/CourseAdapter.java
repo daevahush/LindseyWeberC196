@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.lindseyweberc196.Activity.CoursesActivity;
+
+import com.lindseyweberc196.Activity.CourseDetailsActivity;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.R;
 import java.util.List;
@@ -24,7 +25,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             itemView.setOnClickListener((v) -> {
                 int position = getAdapterPosition();
                 final Course current = mCourses.get(position);
-                Intent intent = new Intent(context, CoursesActivity.class);
+
+                Intent intent = new Intent(context, CourseDetailsActivity.class);
                 intent.putExtra("Course ID", current.getCourseID());
                 intent.putExtra("Term ID", current.getTermID());
                 intent.putExtra("Course Name", current.getTitle());
@@ -37,6 +39,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 intent.putExtra("Note", current.getNote());
                 intent.putExtra("Position", position);
                 context.startActivity(intent);
+
+
             });
         }
     }

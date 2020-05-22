@@ -80,6 +80,17 @@ public class TermsActivity extends AppCompatActivity {
 ////    }
 
 
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode==RESULT_OK) {
+//
+//            ProductEntity product = new ProductEntity(mProductViewModel.lastID()+1, data.getStringExtra("productName"), data.getDoubleExtra("productPrice", 0.0));
+//            mProductViewModel.insert(product);
+//        }
+//    }
+
+
 }
 
 

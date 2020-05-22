@@ -57,13 +57,15 @@ public abstract class EducationManagementDatabase extends RoomDatabase {
             // If you want to keep data through app restarts,
             // comment out the following block
             databaseWriteExecutor.execute(() -> {
+
                 // Populate the database in the background.
-                // If you want to start with more words, just add them.
+                // If you want to start with more things, just add them.
                 TermDAO mTermDao = INSTANCE.termDAO();
                 mTermDao.deleteAllTerms();
-//                mTermDao.deleteAllTerms();
-//                mCourseDao.deleteAllCourses();
-//                mAssessmentDao.deleteAllAssessments();
+                CourseDAO mCourseDao = INSTANCE.courseDAO();
+                mCourseDao.deleteAllCourses();
+                AssessmentDAO mAssessmentDao = INSTANCE.assessmentDAO();
+                mAssessmentDao.deleteAllAssessments();
 
                 Term term = new Term(1,"Term 1","05/01/2020","12/01/2020");
                 mTermDao.insert(term);
@@ -71,55 +73,17 @@ public abstract class EducationManagementDatabase extends RoomDatabase {
                 mTermDao.insert(term);
                 term = new Term(3,"Term 3","05/01/2021","12/01/2021");
                 mTermDao.insert(term);
+
+                Course course = new Course(1,1,"Mobile Application", "05/01/2020", "06/01/2020", Course.Status.INPROGRESS, "Tim", "727=867-5309", "email@email.com", "This is a note.");
+                mCourseDao.insert(course);
+                course = new Course(2,2,"Software 1", "05/01/2020", "06/01/2020", Course.Status.INPROGRESS, "Tim", "727=867-5309", "email@email.com", "This is a note.");
+                mCourseDao.insert(course);
+
+                Assessment assessment = new Assessment(1, 1, "ABM1", "05/14/2020", Assessment.AssessmentType.PERFORMANCE);
+                mAssessmentDao.insert(assessment);
+
             });
         }
     };
-
-
-
-
-
-    //Add temporary data to DB
-//    class PopulateDBAsync extends AsyncTask<Void, Void, Void> {
-//
-//        private final TermDAO mTermDao;
-//        private final CourseDAO mCourseDao;
-//        private final AssessmentDAO mAssessmentDao;
-//
-//        PopulateDBAsync(EducationManagementDatabase db) {
-//            mTermDao = db.termDAO();
-//            mCourseDao = db.courseDAO();
-//            mAssessmentDao = db.assessmentDAO();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(final Void... params) {
-//            // Start the app with a clean database every time.
-//            // Not needed if you only populate on creation.
-//            mTermDao.deleteAllTerms();
-//            mCourseDao.deleteAllCourses();
-//            mAssessmentDao.deleteAllAssessments();
-//
-//            Term term = new Term(1,"Term 1","05/01/2020","12/01/2020");
-//            mTermDao.insert(term);
-//            term = new Term(2,"Term 2","12/01/2020","05/01/2021");
-//            mTermDao.insert(term);
-//            term = new Term(3,"Term 3","05/01/2021","12/01/2021");
-//            mTermDao.insert(term);
-//
-//        Course course = new Course(1,1,"Mobile Application", "05/01/2020", "06/01/2020", Course.Status.INPROGRESS, "Tim", "727=867-5309", "email@email.com", "This is a note.");
-//        mCourseDao.insert(course);
-//        course = new Course(2,"trike",8.0);
-//        mCourseDao.insert(course);
-//
-//            Assessment assessment = new Assessment(1,"bike",6.0);
-//            mAssessmentDao.insert(assessment);
-//            assessment = new Assessment(2,"trike",8.0);
-//            mAssessmentDao.insert(assessment);
-//
-//            return null;
-//        }
-//    }
-
 
 }

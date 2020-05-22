@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.lindseyweberc196.Activity.TermDetailsActivity;
 import com.lindseyweberc196.Activity.TermsActivity;
 import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
@@ -25,11 +27,11 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             itemView.setOnClickListener((v) -> {
                 int position = getAdapterPosition();
                 final Term current = mTerms.get(position);
-                Intent intent = new Intent(context, TermsActivity.class);
-                intent.putExtra("Term ID", current.getTermID());
-                intent.putExtra("Term Name", current.getName());
-                intent.putExtra("Term Start Date", current.getStartDate());
-                intent.putExtra("Term End Date", current.getEndDate());
+                Intent intent = new Intent(context, TermDetailsActivity.class);
+                intent.putExtra("TermID", current.getTermID());
+                intent.putExtra("TermName", current.getName());
+                intent.putExtra("StartDate", current.getStartDate());
+                intent.putExtra("EndDate", current.getEndDate());
                 intent.putExtra("Position", position);
                 context.startActivity(intent);
             });
