@@ -20,7 +20,7 @@ public class AssessmentViewModel extends AndroidViewModel {
         mAllAssessments = mRepository.getAllAssessments();
     }
 
-    public LiveData<List<Assessment>> getAllCourses() {return mAllAssessments;}
+    public LiveData<List<Assessment>> getmAllAssessments() {return mAllAssessments;}
 
     public void insert(Assessment assessment) {mRepository.insert(assessment);}
 }

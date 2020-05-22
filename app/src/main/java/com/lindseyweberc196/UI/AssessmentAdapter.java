@@ -6,14 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.lindseyweberc196.Activity.TermsActivity;
 import com.lindseyweberc196.Entity.Assessment;
-import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
-
 import java.util.List;
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.AssessmentViewHolder> {
@@ -69,7 +65,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
     }
 
 
-    public void setTerms(List<Assessment> assessments) {
+    public void setAssessments(List<Assessment> assessments) {
         mAssessments = assessments;
         notifyDataSetChanged();
     }
