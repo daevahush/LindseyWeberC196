@@ -1,17 +1,13 @@
-package com.lindseyweberc196.Activity;
+package com.lindseyweberc196.Activity.Assessment;
 
+import android.content.Intent;
 import android.os.Bundle;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.view.View;
 import android.widget.TextView;
-
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.ViewModel.AssessmentViewModel;
 
@@ -20,6 +16,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     private AssessmentViewModel mAssessmentViewModel;
     private TextView mAssessmentName;
     private TextView mDate;
+    private TextView mAssessmentType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +34,21 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         mAssessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
         mAssessmentName = findViewById(R.id.AssessmentName);
         mDate = findViewById(R.id.Date);
+        mAssessmentType = findViewById(R.id.AssessmentType);
 
         if(getIntent().getStringExtra("AssessmentName")!=null) {
             mAssessmentName.setText(getIntent().getStringExtra("AssessmentName"));
             mDate.setText(getIntent().getStringExtra("AssessmentDate"));
+            mAssessmentType.setText(getIntent().getStringExtra("Type"));
         }
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(AssessmentDetailsActivity.this, EditAssessmentActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
     }

@@ -11,18 +11,15 @@ public class CourseViewModel extends AndroidViewModel{
 
     private EducationManagementRepository mRepository;
     private LiveData<List<Course>> mAllCourses;
-    private LiveData<List<Course>> mAssociatedCourses;
-    private int termID;
 
     public CourseViewModel (Application application) {
         super(application);
         mRepository = new EducationManagementRepository(application);
         mAllCourses = mRepository.getAllCourses();
-        mAssociatedCourses = mRepository.getAssociatedCourses(termID);
     }
 
     public LiveData<List<Course>> getAllCourses() {return mAllCourses;}
-    public LiveData<List<Course>> getAssociatedCourses(int termID) {return mAssociatedCourses;}
+    public LiveData<List<Course>> getAssociatedCourses(int termID) {return mRepository.getAssociatedCourses(termID);}
 
     public void insert(Course course) {mRepository.insert(course);}
 }

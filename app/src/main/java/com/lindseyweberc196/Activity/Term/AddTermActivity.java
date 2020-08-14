@@ -1,4 +1,4 @@
-package com.lindseyweberc196.Activity;
+package com.lindseyweberc196.Activity.Term;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,19 +25,19 @@ public class AddTermActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_term);
+        setContentView(R.layout.activity_term_add);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
-        mEditTermName = findViewById(R.id.AssessmentName);
-        mEditStartDate = findViewById(R.id.StartDate);
-        mEditEndDate = findViewById(R.id.EndDate);
 
         //Back button in toolbar
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
+        mEditTermName = findViewById(R.id.TermName);
+        mEditStartDate = findViewById(R.id.StartDate);
+        mEditEndDate = findViewById(R.id.EndDate);
 
         final Button button = findViewById(R.id.SaveButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -53,8 +53,7 @@ public class AddTermActivity extends AppCompatActivity {
                 replyIntent.putExtra("EndDate", endDate);
 
                 if(getIntent().getStringExtra("TermName")!=null) {
-                    int id = getIntent().getIntExtra("TermID",0);
-                    Term term = new Term(id, name, startDate, endDate);
+                    Term term = new Term(name, startDate, endDate);
                     mTermViewModel.insert(term);
                 }
                 setResult(RESULT_OK, replyIntent);
@@ -73,12 +72,6 @@ public class AddTermActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    public void onSave(View view) {
-        //Return back to Terms list
-        Intent intent = new Intent(AddTermActivity.this, TermsActivity.class);
-        startActivity(intent);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.lindseyweberc196.Entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -30,6 +31,14 @@ public class Assessment {
         };
     }
 
+    public Assessment(AssessmentType assessmentType, int courseID, String name, String date) {
+        this.assessmentType = assessmentType;
+        this.courseID = courseID;
+        this.name = name;
+        this.date = date;
+    }
+
+    @Ignore
     public Assessment(int assessmentID, int courseID, String name, String date, AssessmentType assessmentType) {
         this.assessmentID = assessmentID;
         this.courseID = courseID;

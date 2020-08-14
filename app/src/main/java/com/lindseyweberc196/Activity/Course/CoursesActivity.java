@@ -1,5 +1,6 @@
-package com.lindseyweberc196.Activity;
+package com.lindseyweberc196.Activity.Course;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,8 +36,8 @@ public class CoursesActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(CoursesActivity.this, AddCourseActivity.class);
-//                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                Intent intent = new Intent(CoursesActivity.this, AddCourseActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -61,6 +62,18 @@ public class CoursesActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    //Add new course to database
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Course course = new Course(Course.Status.PLANTOTAKE, -1, data.getStringExtra("CourseName"), data.getStringExtra("StartDate"),
+                    data.getStringExtra("EndDate"), data.getStringExtra("MentorName"), data.getStringExtra("MentorPhone"),
+                    data.getStringExtra("MentorEmail"));
+            mCourseViewModel.insert(course);
+        }
     }
 
 }

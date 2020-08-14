@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lindseyweberc196.Activity.TermDetailsActivity;
-import com.lindseyweberc196.Activity.TermsActivity;
+import com.lindseyweberc196.Activity.Term.EditTermActivity;
+import com.lindseyweberc196.Activity.Term.TermDetailsActivity;
 import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
 import java.util.List;
@@ -38,8 +38,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         }
     }
 
-
-
     private final LayoutInflater mInflater;
     private final Context context;
     private List<Term> mTerms;
@@ -51,7 +49,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     @Override
     public TermViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.term_list_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.list_item_term, parent, false);
         return new TermViewHolder(itemView);
     }
 
@@ -66,12 +64,10 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
     }
 
-
     public void setTerms(List<Term> terms) {
         mTerms = terms;
         notifyDataSetChanged();
     }
-
 
     @Override
     public int getItemCount() {

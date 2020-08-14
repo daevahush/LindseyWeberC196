@@ -12,6 +12,6 @@
         android:layout_height="729dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/course_list_item" />
+        tools:listitem="@layout/list_item_course" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

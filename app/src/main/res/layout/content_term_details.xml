@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EndDate"
-        tools:listitem="@layout/course_list_item" />
+        tools:listitem="@layout/list_item_course" />
 
     <TextView
         android:id="@+id/textView7"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Term:"
-        app:layout_constraintEnd_toStartOf="@+id/AssessmentName"
+        app:layout_constraintEnd_toStartOf="@+id/TermName"
         app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
-        android:id="@+id/AssessmentName"
+        android:id="@+id/TermName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.332"
         app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/AssessmentName" />
+        app:layout_constraintTop_toBottomOf="@+id/TermName" />
 
     <TextView
         android:id="@+id/EndDate"

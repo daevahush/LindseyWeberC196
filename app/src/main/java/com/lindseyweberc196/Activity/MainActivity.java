@@ -1,15 +1,15 @@
 package com.lindseyweberc196.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.lindseyweberc196.Activity.Assessment.AssessmentsActivity;
+import com.lindseyweberc196.Activity.Course.CoursesActivity;
+import com.lindseyweberc196.Activity.Note.NotesActivity;
+import com.lindseyweberc196.Activity.Term.TermsActivity;
 import com.lindseyweberc196.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goToAssessments(View view) {
         Intent intent = new Intent(MainActivity.this, AssessmentsActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToNotes(View view) {
+        Intent intent = new Intent(MainActivity.this, NotesActivity.class);
         startActivity(intent);
     }
 

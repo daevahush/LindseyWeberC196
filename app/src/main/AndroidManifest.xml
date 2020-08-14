@@ -10,31 +10,67 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity.AssessmentDetailsActivity"
-            android:label="@string/title_activity_assessment_details"
+            android:name=".Activity.Note.EditNoteActivity"
+            android:label="@string/title_activity_edit_note"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Activity.CourseDetailsActivity"
+            android:name=".Activity.Note.NoteDetailsActivity"
+            android:label="@string/title_activity_note_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Note.AddNoteActivity"
+            android:label="@string/title_activity_add_note"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Note.NotesActivity"
+            android:label="@string/title_activity_notes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Assessment.EditAssessmentActivity"
+            android:label="@string/title_activity_edit_assessment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Course.EditCourseActivity"
+            android:label="@string/title_activity_edit_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Assessment.AddAssessmentActivity"
+            android:label="@string/title_activity_add_assessment"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Course.AddCourseActivity"
+            android:label="@string/title_activity_add_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Term.EditTermActivity"
+            android:label="@string/title_activity_edit_term"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Assessment.AssessmentDetailsActivity"
+            android:label="@string/title_activity_assessment_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.Course.CourseDetailsActivity"
             android:label="@string/title_activity_course_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.TermDetailsActivity"
+            android:name=".Activity.Term.TermDetailsActivity"
             android:label="@string/title_activity_term_details"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.AssessmentsActivity"
+            android:name=".Activity.Assessment.AssessmentsActivity"
             android:label="@string/title_activity_assessments"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.CoursesActivity"
+            android:name=".Activity.Course.CoursesActivity"
             android:label="@string/title_activity_courses"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.AddTermActivity"
+            android:name=".Activity.Term.AddTermActivity"
             android:label="@string/title_activity_add_term"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activity.TermsActivity"
+            android:name=".Activity.Term.TermsActivity"
             android:label="@string/title_activity_term"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.MainActivity">

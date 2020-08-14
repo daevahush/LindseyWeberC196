@@ -1,5 +1,6 @@
-package com.lindseyweberc196.Activity;
+package com.lindseyweberc196.Activity.Assessment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +37,8 @@ public class AssessmentsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(AssessmentsActivity.this, AddAssessmentActivity.class);
-//                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                Intent intent = new Intent(AssessmentsActivity.this, AddAssessmentActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
 

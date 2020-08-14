@@ -1,5 +1,6 @@
-package com.lindseyweberc196.Activity;
+package com.lindseyweberc196.Activity.Term;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +10,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.widget.TextView;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.lindseyweberc196.Entity.Course;
+import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.UI.CourseAdapter;
 import com.lindseyweberc196.ViewModel.CourseViewModel;
@@ -19,19 +24,18 @@ import com.lindseyweberc196.ViewModel.TermViewModel;
 
 import java.util.List;
 
-public class TermDetailsActivity extends AppCompatActivity {
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+public class EditTermActivity extends AppCompatActivity {
     private TermViewModel mTermViewModel;
-    private CourseViewModel mCourseViewModel;
-    private TextView mTermName;
-    private TextView mTermStartDate;
-    private TextView mTermEndDate;
+    private EditText mTermName;
+    private EditText mTermStartDate;
+    private EditText mTermEndDate;
     private int mTermID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_term_details);
+        setContentView(R.layout.activity_term_edit);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,7 +46,7 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         //Get selected term details to populate activity with
         mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
-        mTermName = findViewById(R.id.AssessmentName);
+        mTermName = findViewById(R.id.TermName);
         mTermStartDate = findViewById(R.id.StartDate);
         mTermEndDate = findViewById(R.id.EndDate);
 
@@ -54,23 +58,34 @@ public class TermDetailsActivity extends AppCompatActivity {
 
         mTermID = (getIntent().getIntExtra("TermID", 0));
 
+        final Button button = findViewById(R.id.SaveButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent replyIntent = new Intent();
 
-        RecyclerView recyclerView = findViewById(R.id.CourseList);
-        final CourseAdapter adapter = new CourseAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+                String name = mTermName.getText().toString();
+                String startDate = mTermStartDate.getText().toString();
+                String endDate = mTermEndDate.getText().toString();
 
-        mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
+                replyIntent.putExtra("TermName", name);
+                replyIntent.putExtra("StartDate", startDate);
+                replyIntent.putExtra("EndDate", endDate);
 
-        mCourseViewModel.getAssociatedCourses(mTermID).observe(this, new Observer<List<Course>>() {
-            @Override
-            public void onChanged(List<Course> courses) {
-                adapter.setCourses(courses);
+                if(getIntent().getStringExtra("TermName")!=null) {
+                    Term term = new Term(name, startDate, endDate);
+                    mTermViewModel.insert(term);
+                }
+                setResult(RESULT_OK, replyIntent);
+                finish();
+
+                if(TextUtils.isEmpty(mTermName.getText())) {
+                    setResult(RESULT_CANCELED, replyIntent);
+                }
             }
         });
 
-
     }
+
 
     //Back button in toolbar
     @Override
@@ -80,3 +95,4 @@ public class TermDetailsActivity extends AppCompatActivity {
     }
 
 }
+

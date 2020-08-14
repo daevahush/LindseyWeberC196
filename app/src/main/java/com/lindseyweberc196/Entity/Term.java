@@ -1,6 +1,7 @@
 package com.lindseyweberc196.Entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "term_table")
@@ -13,6 +14,13 @@ public class Term {
     private String startDate;
     private String endDate;
 
+    public Term(String name, String startDate, String endDate) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    @Ignore
     public Term(int termID, String name, String startDate, String endDate) {
         this.termID = termID;
         this.name = name;

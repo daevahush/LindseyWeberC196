@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.lindseyweberc196.Activity.AssessmentDetailsActivity;
+import com.lindseyweberc196.Activity.Assessment.AssessmentDetailsActivity;
 import com.lindseyweberc196.Entity.Assessment;
 import com.lindseyweberc196.R;
 import java.util.List;
@@ -26,7 +26,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
                 final Assessment current = mAssessments.get(position);
                 Intent intent = new Intent(context, AssessmentDetailsActivity.class);
                 intent.putExtra("AssessmentID", current.getAssessmentID());
-                intent.putExtra("AssessmentType", current.getAssessmentType());
+                intent.putExtra("Type", current.getAssessmentType().toString());
                 intent.putExtra("AssessmentName", current.getName());
                 intent.putExtra("CourseID", current.getCourseID());
                 intent.putExtra("AssessmentDate", current.getDate());
@@ -47,7 +47,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
 
     @Override
     public AssessmentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.assessment_list_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.list_item_assessment, parent, false);
         return new AssessmentViewHolder(itemView);
     }
 

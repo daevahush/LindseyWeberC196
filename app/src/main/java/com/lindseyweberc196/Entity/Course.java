@@ -1,6 +1,7 @@
 package com.lindseyweberc196.Entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import com.lindseyweberc196.Database.StatusConverter;
@@ -21,7 +22,6 @@ public class Course {
     private String mentorName;
     private String mentorPhone;
     private String mentorEmail;
-    private String note;
 
     public enum Status {
         INPROGRESS {
@@ -41,7 +41,19 @@ public class Course {
         };
     }
 
-    public Course(int courseID, int termID, String title, String startDate, String endDate, Status status, String mentorName, String mentorPhone, String mentorEmail, String note) {
+    public Course(Status status, int termID, String title, String startDate, String endDate, String mentorName, String mentorPhone, String mentorEmail) {
+        this.status = status;
+        this.termID = termID;
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.mentorName = mentorName;
+        this.mentorPhone = mentorPhone;
+        this.mentorEmail = mentorEmail;
+    }
+
+    @Ignore
+    public Course(int courseID, int termID, String title, String startDate, String endDate, Status status, String mentorName, String mentorPhone, String mentorEmail) {
         this.courseID = courseID;
         this.termID = termID;
         this.title = title;
@@ -51,7 +63,6 @@ public class Course {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.note = note;
     }
 
     public String getTitle() {
@@ -116,14 +127,6 @@ public class Course {
 
     public void setCourseID(int courseID) {
         this.courseID = courseID;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
     }
 
     public int getTermID() {

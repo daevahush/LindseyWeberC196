@@ -23,6 +23,6 @@ public class TermViewModel extends AndroidViewModel {
 
     public void insert(Term term) {mRepository.insert(term);}
 
-
+    public void delete(Term term) {mRepository.delete(term);}
 
 }

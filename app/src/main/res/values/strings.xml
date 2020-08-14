@@ -19,7 +19,15 @@
     <string name="title_activity_courses">Courses</string>
     <string name="title_activity_assessments">Assessments</string>
     <string name="title_activity_notes">Notes</string>
-    <string name="title_activity_term_details">TermDetailsActivity</string>
-    <string name="title_activity_course_details">CourseDetailsActivity</string>
-    <string name="title_activity_assessment_details">AssessmentDetailsActivity</string>
+    <string name="title_activity_term_details">Term Details</string>
+    <string name="title_activity_course_details">Course Details</string>
+    <string name="title_activity_assessment_details">Assessment Details</string>
+    <string name="title_activity_edit_term">Edit Term</string>
+    <string name="title_activity_add_course">Add Course</string>
+    <string name="title_activity_add_assessment">Add Assessment</string>
+    <string name="title_activity_edit_course">Edit Course</string>
+    <string name="title_activity_edit_assessment">Edit Assessment</string>
+    <string name="title_activity_add_note">AddNoteActivity</string>
+    <string name="title_activity_note_details">NoteDetailsActivity</string>
+    <string name="title_activity_edit_note">EditNoteActivity</string>
 </resources>

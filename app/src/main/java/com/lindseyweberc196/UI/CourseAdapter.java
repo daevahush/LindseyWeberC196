@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lindseyweberc196.Activity.CourseDetailsActivity;
+import com.lindseyweberc196.Activity.Course.CourseDetailsActivity;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.R;
 import java.util.List;
@@ -36,7 +36,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 intent.putExtra("MentorName", current.getMentorName());
                 intent.putExtra("MentorPhone", current.getMentorPhone());
                 intent.putExtra("MentorEmail", current.getMentorEmail());
-                intent.putExtra("Note", current.getNote());
                 intent.putExtra("Position", position);
                 context.startActivity(intent);
 
@@ -44,8 +43,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             });
         }
     }
-
-
 
     private final LayoutInflater mInflater;
     private final Context context;
@@ -58,7 +55,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
 
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.course_list_item, parent, false);
+        View itemView = mInflater.inflate(R.layout.list_item_course, parent, false);
         return new CourseAdapter.CourseViewHolder(itemView);
     }
 
