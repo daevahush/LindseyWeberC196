@@ -43,7 +43,6 @@ public class NotesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         RecyclerView recyclerView = findViewById(R.id.NotesList);
         final NoteAdapter adapter = new NoteAdapter(this);
         recyclerView.setAdapter(adapter);
@@ -58,8 +57,7 @@ public class NotesActivity extends AppCompatActivity {
             }
         });
 
-
-        FloatingActionButton fab = findViewById(R.id.add);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +65,7 @@ public class NotesActivity extends AppCompatActivity {
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
+
 
     }
 

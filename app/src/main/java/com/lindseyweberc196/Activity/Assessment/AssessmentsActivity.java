@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
+import com.lindseyweberc196.Database.AssessmentConverter;
 import com.lindseyweberc196.Entity.Assessment;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.R;
@@ -71,9 +73,14 @@ public class AssessmentsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            //TODO change the assessmentType parameter to get the selected status from the radio group
-            Assessment assessment = new Assessment(Assessment.AssessmentType.PERFORMANCE, data.getIntExtra("CourseID", -1),
-                    data.getStringExtra("AssessmentName"), data.getStringExtra("Date"));
+            String assessmentType = data.getStringExtra("Type");
+            Assessment.AssessmentType type = AssessmentConverter.toAssessmentType(assessmentType);
+
+            String name = data.getStringExtra("AssessmentName");
+            int courseID = data.getIntExtra("CourseID", -1);
+            String date = data.getStringExtra("Date");
+
+            Assessment assessment = new Assessment(type, courseID, name, date);
             mAssessmentViewModel.insert(assessment);
         }
     }

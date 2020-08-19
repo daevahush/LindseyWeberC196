@@ -1,5 +1,6 @@
 package com.lindseyweberc196.Activity.Assessment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,22 +18,32 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.lindseyweberc196.Database.AssessmentConverter;
+import com.lindseyweberc196.Database.StatusConverter;
+import com.lindseyweberc196.Entity.Assessment;
 import com.lindseyweberc196.Entity.Course;
+import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.UI.CourseAdapter;
 import com.lindseyweberc196.ViewModel.AssessmentViewModel;
 import com.lindseyweberc196.ViewModel.CourseViewModel;
+import com.lindseyweberc196.ViewModel.TermViewModel;
 
 import java.util.List;
 
 public class EditAssessmentActivity extends AppCompatActivity {
     private EditText mEditAssessmentName;
     private EditText mEditDate;
-    private EditText mEditAssessmentType;
-    private RecyclerView mEditAssociatedCourse;
+    private RadioGroup mEditAssessmentType;
+    private LinearLayout mAvailableCourses;
+    private int mSelectedCourseID;
     private AssessmentViewModel mAssessmentViewModel;
     private CourseViewModel mCourseViewModel;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +57,47 @@ public class EditAssessmentActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        //Get selected assessment details to populate activity with
         mAssessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
         mEditAssessmentName = findViewById(R.id.AssessmentName);
         mEditDate = findViewById(R.id.Date);
         mEditAssessmentType = findViewById(R.id.AssessmentType);
-        mEditAssociatedCourse = findViewById(R.id.CourseList);
+
+        if(getIntent().getStringExtra("AssessmentName")!=null) {
+            mEditAssessmentName.setText(getIntent().getStringExtra("AssessmentName"));
+            mEditDate.setText(getIntent().getStringExtra("Date"));
+            Assessment.AssessmentType type = AssessmentConverter.toAssessmentType(getIntent().getStringExtra("AssessmentType"));
+            int typeID = AssessmentConverter.toIDFromType(type);
+            mEditAssessmentType.check(typeID);
+        }
+
 
         //Populate courses to select from
-        RecyclerView recyclerView = findViewById(R.id.CourseList);
-        final CourseAdapter adapter = new CourseAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        mAvailableCourses = findViewById(R.id.CourseList);
+        mContext = this;
         mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         mCourseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
             @Override
-            public void onChanged(List<Course> courses) { adapter.setCourses(courses); }
+            public void onChanged(List<Course> courses) {
+                RadioGroup tRadioGroup = new RadioGroup(mContext);
+
+                for(Course course: courses) {
+                    RadioButton tRadioButton = new RadioButton(mContext);
+                    tRadioButton.setText(course.getTitle());
+                    tRadioButton.setId(course.getCourseID());
+                    tRadioGroup.addView(tRadioButton);
+                }
+
+                tRadioGroup.check(getIntent().getIntExtra("CourseID", 0));
+                tRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        mSelectedCourseID = checkedId;
+                    }
+                });
+                mAvailableCourses.addView(tRadioGroup, 0);
+            }
         });
 
 
@@ -73,20 +107,16 @@ public class EditAssessmentActivity extends AppCompatActivity {
                 Intent replyIntent = new Intent();
 
                 String name = mEditAssessmentName.getText().toString();
-                String type = mEditAssessmentType.getText().toString();
                 String date = mEditDate.getText().toString();
-                int course = 1;
-
+                int typeID = mEditAssessmentType.getCheckedRadioButtonId();
+                Assessment.AssessmentType type = AssessmentConverter.toTypeFromID(typeID);
+                String typeString = AssessmentConverter.toString(type);
 
                 replyIntent.putExtra("AssessmentName", name);
-                replyIntent.putExtra("AssessmentType", type);
                 replyIntent.putExtra("Date", date);
+                replyIntent.putExtra("CourseID", mSelectedCourseID);
+                replyIntent.putExtra("Type", typeString);
 
-
-                if(getIntent().getStringExtra("AssessmentName")!=null) {
-//                    Assessment assessment = new Assessment(type, course, name, date);
-//                    mAssessmentViewModel.insert(assessment);
-                }
                 setResult(RESULT_OK, replyIntent);
                 finish();
 
@@ -106,8 +136,6 @@ public class EditAssessmentActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-
 
 }
 

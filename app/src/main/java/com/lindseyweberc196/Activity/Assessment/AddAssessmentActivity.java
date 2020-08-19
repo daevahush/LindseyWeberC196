@@ -34,12 +34,10 @@ import java.util.List;
 public class AddAssessmentActivity extends AppCompatActivity {
     private EditText mEditAssessmentName;
     private EditText mEditDate;
-    private EditText mEditAssessmentType;
-    private RecyclerView mEditAssociatedCourse;
+    private RadioGroup mAssessmentType;
     private AssessmentViewModel mAssessmentViewModel;
     private CourseViewModel mCourseViewModel;
     private LinearLayout mAvailableCourses;
-    private Context mContext;
     private int mSelectedCourseID;
 
     @Override
@@ -57,24 +55,19 @@ public class AddAssessmentActivity extends AppCompatActivity {
         mAssessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
         mEditAssessmentName = findViewById(R.id.AssessmentName);
         mEditDate = findViewById(R.id.Date);
-        //TODO this needs fixin
-//        mEditAssessmentType = findViewById(R.id.AssessmentType);
-        mEditAssociatedCourse = findViewById(R.id.CourseList);
-
+        mAssessmentType = findViewById(R.id.AssessmentType);
 
         //Populate courses to select from
         mAvailableCourses = findViewById(R.id.CourseList);
-        mContext = this;
-
         mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         mCourseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
-                RadioGroup tRadioGroup = new RadioGroup(mContext);
+                RadioGroup tRadioGroup = new RadioGroup(AddAssessmentActivity.this);
 
                 for(Course course: courses) {
-                    RadioButton tRadioButton = new RadioButton(mContext);
+                    RadioButton tRadioButton = new RadioButton(AddAssessmentActivity.this);
                     tRadioButton.setText(course.getTitle());
                     tRadioButton.setId(course.getCourseID());
                     tRadioGroup.addView(tRadioButton);
@@ -97,16 +90,15 @@ public class AddAssessmentActivity extends AppCompatActivity {
                 Intent replyIntent = new Intent();
 
                 String name = mEditAssessmentName.getText().toString();
-                String type = mEditAssessmentType.getText().toString();
                 String date = mEditDate.getText().toString();
-
-//               Assessment.AssessmentType convertedType = AssessmentConverter.toTypeFromID(type);
-
+                int typeID = mAssessmentType.getCheckedRadioButtonId();
+                Assessment.AssessmentType type = AssessmentConverter.toTypeFromID(typeID);
+                String typeString = AssessmentConverter.toString(type);
 
                 replyIntent.putExtra("AssessmentName", name);
-//                replyIntent.putExtra("AssessmentType", convertedType);
                 replyIntent.putExtra("Date", date);
                 replyIntent.putExtra("CourseID", mSelectedCourseID);
+                replyIntent.putExtra("Type", typeString);
 
                 setResult(RESULT_OK, replyIntent);
                 finish();

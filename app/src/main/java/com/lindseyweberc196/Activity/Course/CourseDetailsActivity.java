@@ -155,7 +155,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
             String mentorEmail = data.getStringExtra("MentorEmail");
             String statusString = data.getStringExtra("Status");
             int termID = data.getIntExtra("TermID", 0);
-
             Course.Status status = StatusConverter.toStatus(statusString);
 
             Course course = new Course(mCourseID, termID, name, startDate, endDate, status, mentorName, mentorPhone, mentorEmail);

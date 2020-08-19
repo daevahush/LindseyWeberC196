@@ -57,7 +57,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
 
         if(getIntent().getStringExtra("AssessmentName")!=null) {
             mAssessmentName.setText(getIntent().getStringExtra("AssessmentName"));
-            mDate.setText(getIntent().getStringExtra("AssessmentDate"));
+            mDate.setText(getIntent().getStringExtra("Date"));
             mAssessmentType.setText(getIntent().getStringExtra("Type"));
         }
 
@@ -86,9 +86,9 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AssessmentDetailsActivity.this, EditAssessmentActivity.class);
                 intent.putExtra("AssessmentName", mAssessmentName.getText());
-                intent.putExtra("AssessmentDate", mDate.getText());
-                //TODO this is wrong I think
+                intent.putExtra("Date", mDate.getText());
                 intent.putExtra("AssessmentType", mAssessmentType.getText());
+                intent.putExtra("CourseID", mCourseID);
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -114,7 +114,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.DeleteButton:
-                mCourseViewModel.delete(mCourseID);
+                mAssessmentViewModel.delete(mAssessmentID);
                 finish();
                 return true;
             default :
@@ -129,15 +129,16 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
         if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             String name = data.getStringExtra("AssessmentName");
             String date = data.getStringExtra("Date");
+            String assessmentType = data.getStringExtra("Type");
+            Assessment.AssessmentType type = AssessmentConverter.toAssessmentType(assessmentType);
+            int courseID = data.getIntExtra("CourseID", 0);
 
-//            Assessment.AssessmentType type = AssessmentConverter.toTypeFromID(data.getStringExtra("AssessmentStatus"));
-
-            Assessment assessment = new Assessment(Assessment.AssessmentType.PERFORMANCE, mCourseID, name, date);
+            Assessment assessment = new Assessment(mAssessmentID, courseID, name, date, type);
             mAssessmentViewModel.insert(assessment);
 
             mAssessmentName.setText(name);
             mDate.setText(date);
-            mAssessmentType.setText(data.getStringExtra("AssessmentType"));
+            mAssessmentType.setText(assessmentType);
         }
     }
 }

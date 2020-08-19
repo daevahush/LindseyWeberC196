@@ -3,11 +3,11 @@ package com.lindseyweberc196.Database;
 import androidx.room.TypeConverter;
 
 import com.lindseyweberc196.Entity.Assessment;
-import com.lindseyweberc196.Entity.Course;
+import com.lindseyweberc196.R;
 
 public class AssessmentConverter {
     @TypeConverter
-    public String toString (Assessment.AssessmentType assessmentType){
+    public static String toString(Assessment.AssessmentType assessmentType){
         switch (assessmentType) {
             case OBJECTIVE:
                 return "Objective Assessment";
@@ -18,7 +18,18 @@ public class AssessmentConverter {
     }
 
     @TypeConverter
-    public Assessment.AssessmentType toAssessmentType (String assessmentType){
+    public static Assessment.AssessmentType toTypeFromID(int typeID){
+        switch (typeID) {
+            case R.id.ObjectiveAssessment:
+                return Assessment.AssessmentType.OBJECTIVE;
+            case R.id.PerformanceAssessment:
+                return Assessment.AssessmentType.PERFORMANCE;
+        }
+        return null;
+    }
+
+    @TypeConverter
+    public static Assessment.AssessmentType toAssessmentType(String assessmentType){
         switch (assessmentType) {
             case "Objective Assessment":
                 return Assessment.AssessmentType.OBJECTIVE;
@@ -38,4 +49,15 @@ public class AssessmentConverter {
 //        }
 //        return null;
 //    }
+
+    @TypeConverter
+    public static int toIDFromType(Assessment.AssessmentType assessmentType){
+        switch (assessmentType) {
+            case OBJECTIVE:
+                return R.id.ObjectiveAssessment;
+            case PERFORMANCE:
+                return R.id.PerformanceAssessment;
+        }
+        return -1;
+    }
 }
