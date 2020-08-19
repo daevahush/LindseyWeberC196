@@ -63,9 +63,10 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
         if(getIntent().getStringExtra("NoteTitle")!=null) {
             mNoteTitle.setText(getIntent().getStringExtra("NoteTitle"));
-//            mCourseName.setText(getIntent().getStringExtra("CourseName"));
             mNote.setText(getIntent().getStringExtra("Note"));
         }
+
+        mNoteID = (getIntent().getIntExtra("NoteID", 0));
 
         //Get the course title
         mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
@@ -87,7 +88,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
                 Intent intent = new Intent(NoteDetailsActivity.this, EditNoteActivity.class);
                 intent.putExtra("NoteTitle", mNoteTitle.getText());
                 intent.putExtra("Note", mNote.getText());
-                intent.putExtra("CourseName", mCourseName.getText());
+                intent.putExtra("CourseID", mCourseID);
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -131,12 +132,11 @@ public class NoteDetailsActivity extends AppCompatActivity {
             String noteBody = data.getStringExtra("Note");
             int courseID = data.getIntExtra("CourseID", -1);
 
-            Note note = new Note(title, noteBody, courseID);
+            Note note = new Note(mNoteID, title, noteBody, courseID);
             mNoteViewModel.insert(note);
 
             mNoteTitle.setText(title);
             mNote.setText(noteBody);
-//            mCourseName.setText(courseName);
         }
     }
 
