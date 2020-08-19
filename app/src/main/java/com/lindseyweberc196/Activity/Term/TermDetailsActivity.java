@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,7 +46,6 @@ public class TermDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         //Get selected term details to populate activity with
         mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
         mTermName = findViewById(R.id.TermName);
@@ -57,8 +58,8 @@ public class TermDetailsActivity extends AppCompatActivity {
             mTermEndDate.setText(getIntent().getStringExtra("EndDate"));
         }
 
+        //Get associated courses for Term
         mTermID = (getIntent().getIntExtra("TermID", 0));
-
 
         RecyclerView recyclerView = findViewById(R.id.CourseList);
         final CourseAdapter adapter = new CourseAdapter(this);
@@ -74,12 +75,14 @@ public class TermDetailsActivity extends AppCompatActivity {
             }
         });
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TermDetailsActivity.this, EditTermActivity.class);
+                intent.putExtra("TermName", mTermName.getText());
+                intent.putExtra("StartDate", mTermStartDate.getText());
+                intent.putExtra("EndDate", mTermEndDate.getText());
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -92,7 +95,25 @@ public class TermDetailsActivity extends AppCompatActivity {
         return true;
     }
 
+    //Options menu in toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     //Delete button in toolbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.DeleteButton:
+                mTermViewModel.delete(mTermID);
+                finish();
+                return true;
+            default :
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
     //Save edited term details to database
@@ -100,8 +121,16 @@ public class TermDetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Term term = new Term(data.getStringExtra("TermName"), data.getStringExtra("StartDate"), data.getStringExtra("EndDate"));
+            String name = data.getStringExtra("TermName");
+            String startDate = data.getStringExtra("StartDate");
+            String endDate = data.getStringExtra("EndDate");
+
+            Term term = new Term(mTermID, name, startDate, endDate);
             mTermViewModel.insert(term);
+
+            mTermName.setText(name);
+            mTermStartDate.setText(startDate);
+            mTermEndDate.setText(endDate);
         }
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lindseyweberc196.Activity.Course.CourseDetailsActivity;
+import com.lindseyweberc196.Database.StatusConverter;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.R;
 import java.util.List;
@@ -30,7 +31,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 intent.putExtra("CourseID", current.getCourseID());
                 intent.putExtra("TermID", current.getTermID());
                 intent.putExtra("CourseName", current.getTitle());
-                intent.putExtra("Status", current.getStatus());
+                intent.putExtra("Status", StatusConverter.toString(current.getStatus()));
                 intent.putExtra("StartDate", current.getStartDate());
                 intent.putExtra("EndDate", current.getEndDate());
                 intent.putExtra("MentorName", current.getMentorName());

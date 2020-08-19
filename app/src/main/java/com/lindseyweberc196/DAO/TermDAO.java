@@ -2,7 +2,6 @@ package com.lindseyweberc196.DAO;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -14,8 +13,8 @@ public interface TermDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert (Term term);
 
-    @Delete
-    void deleteTerm (Term term);
+    @Query("DELETE FROM term_table WHERE termID = :ID")
+    void deleteTerm (int ID);
 
     @Query("DELETE FROM term_table")
     void deleteAllTerms();

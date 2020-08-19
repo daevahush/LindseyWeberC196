@@ -29,8 +29,6 @@ public class EditTermActivity extends AppCompatActivity {
     private EditText mTermName;
     private EditText mTermStartDate;
     private EditText mTermEndDate;
-    private int mTermID;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +54,6 @@ public class EditTermActivity extends AppCompatActivity {
             mTermEndDate.setText(getIntent().getStringExtra("EndDate"));
         }
 
-        mTermID = (getIntent().getIntExtra("TermID", 0));
-
         final Button button = findViewById(R.id.SaveButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -71,10 +67,6 @@ public class EditTermActivity extends AppCompatActivity {
                 replyIntent.putExtra("StartDate", startDate);
                 replyIntent.putExtra("EndDate", endDate);
 
-                if(getIntent().getStringExtra("TermName")!=null) {
-                    Term term = new Term(name, startDate, endDate);
-                    mTermViewModel.insert(term);
-                }
                 setResult(RESULT_OK, replyIntent);
                 finish();
 

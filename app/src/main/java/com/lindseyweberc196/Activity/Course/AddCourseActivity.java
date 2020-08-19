@@ -1,5 +1,6 @@
 package com.lindseyweberc196.Activity.Course;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,7 +15,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.lindseyweberc196.Database.StatusConverter;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
@@ -31,8 +36,11 @@ public class AddCourseActivity extends AppCompatActivity {
     private EditText mEditMentorName;
     private EditText mEditMentorPhone;
     private EditText mEditMentorEmail;
+    private RadioGroup mEditStatus;
     private CourseViewModel mCourseViewModel;
     private TermViewModel mTermViewModel;
+    private LinearLayout mAvailableTerms;
+    private int mSelectedTermID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +62,31 @@ public class AddCourseActivity extends AppCompatActivity {
         mEditMentorName = findViewById(R.id.MentorName);
         mEditMentorPhone = findViewById(R.id.MentorPhone);
         mEditMentorEmail = findViewById(R.id.MentorEmail);
+        mEditStatus = findViewById(R.id.CourseStatus);
 
         //Populate terms to select from
-        RecyclerView recyclerView = findViewById(R.id.TermsList);
-        final TermAdapter adapter = new TermAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        mAvailableTerms = findViewById(R.id.TermsList);
         mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
 
         mTermViewModel.getAllTerms().observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(List<Term> terms) {
-                adapter.setTerms(terms);
+                RadioGroup tRadioGroup = new RadioGroup(AddCourseActivity.this);
+
+                for(Term term: terms) {
+                    RadioButton tRadioButton = new RadioButton(AddCourseActivity.this);
+                    tRadioButton.setText(term.getName());
+                    tRadioButton.setId(term.getTermID());
+                    tRadioGroup.addView(tRadioButton);
+                }
+
+                tRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        mSelectedTermID = checkedId;
+                    }
+                });
+                mAvailableTerms.addView(tRadioGroup, 0);
             }
         });
 
@@ -81,6 +101,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 String mentorName = mEditMentorName.getText().toString();
                 String mentorPhone = mEditMentorPhone.getText().toString();
                 String mentorEmail = mEditMentorEmail.getText().toString();
+                int status = mEditStatus.getCheckedRadioButtonId();
 
                 replyIntent.putExtra("CourseName", name);
                 replyIntent.putExtra("StartDate", startDate);
@@ -88,12 +109,9 @@ public class AddCourseActivity extends AppCompatActivity {
                 replyIntent.putExtra("MentorName", mentorName);
                 replyIntent.putExtra("MentorPhone", mentorPhone);
                 replyIntent.putExtra("MentorEmail", mentorEmail);
+                replyIntent.putExtra("TermID", mSelectedTermID);
+                replyIntent.putExtra("Status", StatusConverter.toString(status));
 
-
-                if(getIntent().getStringExtra("CourseName")!=null) {
-                    Course course = new Course(Course.Status.PLANTOTAKE, -1, name, startDate, endDate, mentorName, mentorPhone, mentorEmail);
-                    mCourseViewModel.insert(course);
-                }
                 setResult(RESULT_OK, replyIntent);
                 finish();
 
@@ -102,7 +120,6 @@ public class AddCourseActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     //Back button in toolbar

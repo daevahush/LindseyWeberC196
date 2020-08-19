@@ -2,7 +2,6 @@ package com.lindseyweberc196.DAO;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -14,8 +13,8 @@ public interface CourseDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert (Course course);
 
-    @Delete
-    void deleteCourse (Course course);
+    @Query("DELETE FROM course_table WHERE courseID = :ID")
+    void deleteCourse (int ID);
 
     @Query("DELETE FROM course_table")
     void deleteAllCourses();
@@ -25,4 +24,7 @@ public interface CourseDAO {
 
     @Query("SELECT * FROM course_table WHERE termID = :termID")
     LiveData<List<Course>> getAssociatedCourses(int termID);
+
+    @Query("SELECT * FROM course_table WHERE courseID = :courseID LIMIT 1")
+    LiveData<Course> getCourseByID(int courseID);
 }

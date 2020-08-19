@@ -12,7 +12,6 @@ public class TermViewModel extends AndroidViewModel {
     private EducationManagementRepository mRepository;
     private LiveData<List<Term>> mAllTerms;
 
-
     public TermViewModel (Application application) {
         super(application);
         mRepository = new EducationManagementRepository(application);
@@ -23,6 +22,6 @@ public class TermViewModel extends AndroidViewModel {
 
     public void insert(Term term) {mRepository.insert(term);}
 
-    public void delete(Term term) {mRepository.delete(term);}
+    public void delete(int ID) {mRepository.deleteTerm(ID);}
 
 }

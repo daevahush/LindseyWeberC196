@@ -44,6 +44,7 @@ public class EducationManagementRepository {
     public LiveData<List<Term>> getAllTerms() { return mAllTerms;}
     public LiveData<List<Course>> getAssociatedCourses(int termID) {return mCourseDAO.getAssociatedCourses(termID);}
     public LiveData<List<Course>> getAllCourses() {return mAllCourses;}
+    public LiveData<Course> getCourseByID(int ID) {return mCourseDAO.getCourseByID(ID);}
     public LiveData<List<Assessment>> getAssociatedAssessments(int courseID) {return mAssessmentDAO.getAssociatedAssessments(courseID);}
     public LiveData<List<Assessment>> getAllAssessments() {return mAllAssessments;}
     public LiveData<List<Note>> getAllNotes() {return mAllNotes;}
@@ -72,27 +73,27 @@ public class EducationManagementRepository {
         });
     }
 
-    public void delete(Term term) {
+    public void deleteTerm(int ID) {
         EducationManagementDatabase.databaseWriteExecutor.execute(() -> {
-            mTermDAO.deleteTerm(term);
+            mTermDAO.deleteTerm(ID);
         });
     }
 
-    public void delete(Course course) {
+    public void deleteCourse(int ID) {
         EducationManagementDatabase.databaseWriteExecutor.execute(() -> {
-            mCourseDAO.deleteCourse(course);
+            mCourseDAO.deleteCourse(ID);
         });
     }
 
-    public void delete(Assessment assessment) {
+    public void deleteAssessment(int ID) {
         EducationManagementDatabase.databaseWriteExecutor.execute(() -> {
-            mAssessmentDAO.deleteAssessment(assessment);
+            mAssessmentDAO.deleteAssessment(ID);
         });
     }
 
-    public void delete(Note note) {
+    public void deleteNote(int ID) {
         EducationManagementDatabase.databaseWriteExecutor.execute(() -> {
-            mNoteDAO.deleteNote(note);
+            mNoteDAO.deleteNote(ID);
         });
     }
 

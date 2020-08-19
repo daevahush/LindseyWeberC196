@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
+import com.lindseyweberc196.Database.StatusConverter;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.UI.CourseAdapter;
@@ -54,7 +56,6 @@ public class CoursesActivity extends AppCompatActivity {
                 adapter.setCourses(courses);
             }
         });
-
     }
 
     //Back button in toolbar
@@ -69,11 +70,18 @@ public class CoursesActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Course course = new Course(Course.Status.PLANTOTAKE, -1, data.getStringExtra("CourseName"), data.getStringExtra("StartDate"),
-                    data.getStringExtra("EndDate"), data.getStringExtra("MentorName"), data.getStringExtra("MentorPhone"),
-                    data.getStringExtra("MentorEmail"));
+            String status = data.getStringExtra("Status");
+            Course.Status courseStatus = StatusConverter.toStatus(status);
+            int termID = data.getIntExtra("TermID", -1);
+            String courseName = data.getStringExtra("CourseName");
+            String startDate = data.getStringExtra("StartDate");
+            String endDate = data.getStringExtra("EndDate");
+            String mentorName = data.getStringExtra("MentorName");
+            String mentorPhone = data.getStringExtra("MentorPhone");
+            String mentorEmail = data.getStringExtra("MentorEmail");
+
+            Course course = new Course(courseStatus, termID, courseName, startDate, endDate, mentorName, mentorPhone, mentorEmail);
             mCourseViewModel.insert(course);
         }
     }
-
 }

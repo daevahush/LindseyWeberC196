@@ -3,6 +3,7 @@ package com.lindseyweberc196.Database;
 import androidx.room.TypeConverter;
 
 import com.lindseyweberc196.Entity.Assessment;
+import com.lindseyweberc196.Entity.Course;
 
 public class AssessmentConverter {
     @TypeConverter
@@ -26,4 +27,15 @@ public class AssessmentConverter {
         }
         return null;
     }
+
+//    @TypeConverter
+//    public static Assessment.AssessmentType toTypeFromID(String assessmentTypeID){
+//        switch (assessmentTypeID) {
+//            case "ObjectiveAssessment":
+//                return Assessment.AssessmentType.OBJECTIVE;
+//            case "PerformanceAssessment":
+//                return Assessment.AssessmentType.PERFORMANCE;
+//        }
+//        return null;
+//    }
 }

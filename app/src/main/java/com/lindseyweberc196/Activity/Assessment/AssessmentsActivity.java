@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import com.lindseyweberc196.Entity.Assessment;
+import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.UI.AssessmentAdapter;
 import com.lindseyweberc196.ViewModel.AssessmentViewModel;
 import java.util.List;
-
 
 public class AssessmentsActivity extends AppCompatActivity {
     private AssessmentViewModel mAssessmentViewModel;
@@ -63,6 +63,19 @@ public class AssessmentsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+
+    //Add new assessment to database
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            //TODO change the assessmentType parameter to get the selected status from the radio group
+            Assessment assessment = new Assessment(Assessment.AssessmentType.PERFORMANCE, data.getIntExtra("CourseID", -1),
+                    data.getStringExtra("AssessmentName"), data.getStringExtra("Date"));
+            mAssessmentViewModel.insert(assessment);
+        }
     }
 
 }

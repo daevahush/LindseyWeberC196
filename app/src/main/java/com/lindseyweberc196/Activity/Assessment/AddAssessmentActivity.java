@@ -1,5 +1,6 @@
 package com.lindseyweberc196.Activity.Assessment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +14,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.lindseyweberc196.Database.AssessmentConverter;
 import com.lindseyweberc196.Entity.Assessment;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.Entity.Term;
@@ -33,6 +38,9 @@ public class AddAssessmentActivity extends AppCompatActivity {
     private RecyclerView mEditAssociatedCourse;
     private AssessmentViewModel mAssessmentViewModel;
     private CourseViewModel mCourseViewModel;
+    private LinearLayout mAvailableCourses;
+    private Context mContext;
+    private int mSelectedCourseID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +57,37 @@ public class AddAssessmentActivity extends AppCompatActivity {
         mAssessmentViewModel = new ViewModelProvider(this).get(AssessmentViewModel.class);
         mEditAssessmentName = findViewById(R.id.AssessmentName);
         mEditDate = findViewById(R.id.Date);
-        mEditAssessmentType = findViewById(R.id.AssessmentType);
+        //TODO this needs fixin
+//        mEditAssessmentType = findViewById(R.id.AssessmentType);
         mEditAssociatedCourse = findViewById(R.id.CourseList);
 
+
         //Populate courses to select from
-        RecyclerView recyclerView = findViewById(R.id.CourseList);
-        final CourseAdapter adapter = new CourseAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAvailableCourses = findViewById(R.id.CourseList);
+        mContext = this;
 
         mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         mCourseViewModel.getAllCourses().observe(this, new Observer<List<Course>>() {
             @Override
-            public void onChanged(List<Course> courses) { adapter.setCourses(courses); }
+            public void onChanged(List<Course> courses) {
+                RadioGroup tRadioGroup = new RadioGroup(mContext);
+
+                for(Course course: courses) {
+                    RadioButton tRadioButton = new RadioButton(mContext);
+                    tRadioButton.setText(course.getTitle());
+                    tRadioButton.setId(course.getCourseID());
+                    tRadioGroup.addView(tRadioButton);
+                }
+
+                tRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        mSelectedCourseID = checkedId;
+                    }
+                });
+                mAvailableCourses.addView(tRadioGroup, 0);
+            }
         });
 
 
@@ -74,18 +99,15 @@ public class AddAssessmentActivity extends AppCompatActivity {
                 String name = mEditAssessmentName.getText().toString();
                 String type = mEditAssessmentType.getText().toString();
                 String date = mEditDate.getText().toString();
-                int course = 1;
+
+//               Assessment.AssessmentType convertedType = AssessmentConverter.toTypeFromID(type);
 
 
                 replyIntent.putExtra("AssessmentName", name);
-                replyIntent.putExtra("AssessmentType", type);
+//                replyIntent.putExtra("AssessmentType", convertedType);
                 replyIntent.putExtra("Date", date);
+                replyIntent.putExtra("CourseID", mSelectedCourseID);
 
-
-                if(getIntent().getStringExtra("AssessmentName")!=null) {
-//                    Assessment assessment = new Assessment(type, course, name, date);
-//                    mAssessmentViewModel.insert(assessment);
-                }
                 setResult(RESULT_OK, replyIntent);
                 finish();
 

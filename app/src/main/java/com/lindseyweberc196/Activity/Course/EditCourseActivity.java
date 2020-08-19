@@ -1,5 +1,6 @@
 package com.lindseyweberc196.Activity.Course;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,7 +18,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.lindseyweberc196.Database.StatusConverter;
 import com.lindseyweberc196.Entity.Course;
 import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
@@ -34,8 +39,12 @@ public class EditCourseActivity extends AppCompatActivity {
     private EditText mEditMentorName;
     private EditText mEditMentorPhone;
     private EditText mEditMentorEmail;
+    private RadioGroup mEditStatus;
     private CourseViewModel mCourseViewModel;
     private TermViewModel mTermViewModel;
+    private LinearLayout mAvailableTerms;
+    private Context mContext;
+    private int mSelectedTermID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,22 +66,47 @@ public class EditCourseActivity extends AppCompatActivity {
         mEditMentorName = findViewById(R.id.MentorName);
         mEditMentorPhone = findViewById(R.id.MentorPhone);
         mEditMentorEmail = findViewById(R.id.MentorEmail);
+        mEditStatus = findViewById(R.id.CourseStatus);
+
+        if(getIntent().getStringExtra("CourseName")!=null) {
+            mEditCourseName.setText(getIntent().getStringExtra("CourseName"));
+            mEditStartDate.setText(getIntent().getStringExtra("StartDate"));
+            mEditEndDate.setText(getIntent().getStringExtra("EndDate"));
+            mEditMentorName.setText(getIntent().getStringExtra("MentorName"));
+            mEditMentorPhone.setText(getIntent().getStringExtra("MentorPhone"));
+            mEditMentorEmail.setText(getIntent().getStringExtra("MentorEmail"));
+            int statusID = StatusConverter.toID(getIntent().getStringExtra("Status"));
+            mEditStatus.check(statusID);
+        }
+
 
         //Populate terms to select from
-        RecyclerView recyclerView = findViewById(R.id.TermsList);
-        final TermAdapter adapter = new TermAdapter(this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        mAvailableTerms = findViewById(R.id.TermsList);
+        mContext = this;
         mTermViewModel = new ViewModelProvider(this).get(TermViewModel.class);
 
         mTermViewModel.getAllTerms().observe(this, new Observer<List<Term>>() {
             @Override
             public void onChanged(List<Term> terms) {
-                adapter.setTerms(terms);
+                RadioGroup tRadioGroup = new RadioGroup(mContext);
+
+                for(Term term: terms) {
+                    RadioButton tRadioButton = new RadioButton(mContext);
+                    tRadioButton.setText(term.getName());
+                    tRadioButton.setId(term.getTermID());
+                    tRadioGroup.addView(tRadioButton);
+                }
+
+                tRadioGroup.check(getIntent().getIntExtra("TermID", 0));
+                tRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        mSelectedTermID = checkedId;
+                    }
+                });
+                mAvailableTerms.addView(tRadioGroup, 0);
             }
         });
-
 
 
         final Button button = findViewById(R.id.SaveButton);
@@ -93,12 +127,9 @@ public class EditCourseActivity extends AppCompatActivity {
                 replyIntent.putExtra("MentorName", mentorName);
                 replyIntent.putExtra("MentorPhone", mentorPhone);
                 replyIntent.putExtra("MentorEmail", mentorEmail);
+                replyIntent.putExtra("TermID", mSelectedTermID);
+                replyIntent.putExtra("Status", StatusConverter.toString(mEditStatus.getCheckedRadioButtonId()));
 
-
-                if(getIntent().getStringExtra("CourseName")!=null) {
-//                    Course course = new Course(Course.Status.PLANTOTAKE, -1, name, startDate, endDate, mentorName, mentorPhone, mentorEmail);
-//                    mCourseViewModel.insert(course);
-                }
                 setResult(RESULT_OK, replyIntent);
                 finish();
 
@@ -109,9 +140,6 @@ public class EditCourseActivity extends AppCompatActivity {
         });
 
     }
-
-
-
 
     //Back button in toolbar
     @Override

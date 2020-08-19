@@ -7,15 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.lindseyweberc196.Activity.Term.EditTermActivity;
 import com.lindseyweberc196.Activity.Term.TermDetailsActivity;
 import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
 import java.util.List;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder> {
-
 
     class TermViewHolder extends RecyclerView.ViewHolder {
 
@@ -77,6 +74,4 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             return 0;
         }
     }
-
-
 }

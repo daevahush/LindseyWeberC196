@@ -26,14 +26,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="Course:" />
+                android:labelFor="@id/CourseName"
+                android:text="@string/course" />
 
             <EditText
                 android:id="@+id/CourseName"
                 android:layout_width="183dp"
                 android:layout_height="36dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="36dp" />
+                android:layout_marginEnd="36dp"
+                android:contentDescription="@string/courseName"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/course_status" />
+
+            <RadioGroup
+                android:id="@+id/CourseStatus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/InProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_progress" />
+
+                <RadioButton
+                    android:id="@+id/PlanToTake"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plan_to_take" />
+
+                <RadioButton
+                    android:id="@+id/Completed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/completed" />
+
+                <RadioButton
+                    android:id="@+id/Dropped"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dropped" />
+            </RadioGroup>
 
             <TextView
                 android:id="@+id/textView8"
@@ -41,26 +81,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
-                android:text="Start Date:" />
+                android:labelFor="@id/StartDate"
+                android:text="@string/start_date" />
 
             <EditText
                 android:id="@+id/StartDate"
                 android:layout_width="184dp"
                 android:layout_height="39dp"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="24dp"
+                android:importantForAutofill="no"
+                android:inputType="date" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:text="End Date:" />
+                android:labelFor="@id/EndDate"
+                android:text="@string/end_date" />
 
             <EditText
                 android:id="@+id/EndDate"
                 android:layout_width="192dp"
                 android:layout_height="37dp"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="24dp"
+                android:inputType="date"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -68,14 +114,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="196dp"
-                android:text="Mentor Name:" />
+                android:labelFor="@id/MentorName"
+                android:text="@string/mentor_name" />
 
             <EditText
                 android:id="@+id/MentorName"
                 android:layout_width="169dp"
                 android:layout_height="41dp"
                 android:layout_marginStart="80dp"
-                android:layout_marginTop="44dp" />
+                android:layout_marginTop="44dp"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -83,14 +132,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="48dp"
-                android:text="Mentor Phone:" />
+                android:labelFor="@id/MentorPhone"
+                android:text="@string/mentor_phone" />
 
             <EditText
                 android:id="@+id/MentorPhone"
                 android:layout_width="169dp"
                 android:layout_height="49dp"
                 android:layout_marginStart="80dp"
-                android:layout_marginTop="36dp" />
+                android:layout_marginTop="36dp"
+                android:importantForAutofill="no"
+                android:inputType="text|phone" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -98,32 +150,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="64dp"
-                android:text="Mentor Email:" />
+                android:labelFor="@id/MentorEmail"
+                android:text="@string/mentor_email" />
 
             <EditText
                 android:id="@+id/MentorEmail"
                 android:layout_width="172dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="84dp"
-                android:layout_marginTop="40dp" />
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
 
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Select a term: " />
+                android:text="@string/select_a_term" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <LinearLayout
                 android:id="@+id/TermsList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/list_item_term" />
+                android:orientation="vertical"></LinearLayout>
 
             <Button
                 android:id="@+id/SaveButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save" />
+                android:text="@string/save" />
 
         </LinearLayout>
     </ScrollView>

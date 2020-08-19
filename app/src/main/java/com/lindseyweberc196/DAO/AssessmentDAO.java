@@ -16,8 +16,8 @@ public interface AssessmentDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert (Assessment assessment);
 
-    @Delete
-    void deleteAssessment (Assessment assessment);
+    @Query("DELETE FROM assessment_table WHERE assessmentID = :ID")
+    void deleteAssessment (int ID);
 
     @Query("DELETE FROM assessment_table")
     void deleteAllAssessments();

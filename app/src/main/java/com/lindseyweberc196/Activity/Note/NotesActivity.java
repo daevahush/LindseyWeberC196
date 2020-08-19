@@ -59,7 +59,7 @@ public class NotesActivity extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.add);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,6 +75,20 @@ public class NotesActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    //Add new note to database
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            String noteTitle = data.getStringExtra("NoteTitle");
+            String noteBody = data.getStringExtra("Note");
+            int courseID = data.getIntExtra("CourseID", 0);
+
+            Note note = new Note(noteTitle, noteBody, courseID);
+            mNoteViewModel.insert(note);
+        }
     }
 
 

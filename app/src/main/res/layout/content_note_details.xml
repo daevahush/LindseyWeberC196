@@ -18,12 +18,14 @@
 
     <TextView
         android:id="@+id/Note"
-        android:layout_width="397dp"
-        android:layout_height="542dp"
-        android:layout_marginBottom="108dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/CourseName" />
 
     <TextView
         android:id="@+id/CourseName"
@@ -34,4 +36,5 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NoteTitle" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

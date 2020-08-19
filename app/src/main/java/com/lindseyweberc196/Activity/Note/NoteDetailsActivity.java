@@ -8,17 +8,22 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lindseyweberc196.Activity.Term.EditTermActivity;
 import com.lindseyweberc196.Activity.Term.TermDetailsActivity;
 import com.lindseyweberc196.Entity.Course;
+import com.lindseyweberc196.Entity.Note;
+import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.UI.CourseAdapter;
 import com.lindseyweberc196.ViewModel.CourseViewModel;
@@ -34,6 +39,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
     private TextView mNoteTitle;
     private TextView mCourseName;
     private TextView mNote;
+    private int mNoteID;
     private int mCourseID;
 
 
@@ -49,42 +55,39 @@ public class NoteDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Get selected term details to populate activity with
+        //Get selected note details to populate activity with
         mNoteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         mNoteTitle = findViewById(R.id.NoteTitle);
         mCourseName = findViewById(R.id.CourseName);
         mNote = findViewById(R.id.Note);
 
-        if(getIntent().getStringExtra("NoteName")!=null) {
-            mNoteTitle.setText(getIntent().getStringExtra("NoteName"));
-            mCourseName.setText(getIntent().getStringExtra("CourseName"));
+        if(getIntent().getStringExtra("NoteTitle")!=null) {
+            mNoteTitle.setText(getIntent().getStringExtra("NoteTitle"));
+//            mCourseName.setText(getIntent().getStringExtra("CourseName"));
             mNote.setText(getIntent().getStringExtra("Note"));
         }
 
-
-        //Get the course title somehow
+        //Get the course title
+        mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
         mCourseID = (getIntent().getIntExtra("CourseID", 0));
+        LiveData<Course> tCourse = mCourseViewModel.getCourseByID(mCourseID);
 
-//        RecyclerView recyclerView = findViewById(R.id.CourseList);
-//        final CourseAdapter adapter = new CourseAdapter(this);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//
-//        mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-//
-//        mCourseViewModel.getAssociatedCourses(mTermID).observe(this, new Observer<List<Course>>() {
-//            @Override
-//            public void onChanged(List<Course> courses) {
-//                adapter.setCourses(courses);
-//            }
-//        });
+        tCourse.observe(this, new Observer<Course>() {
+            @Override
+            public void onChanged(Course course) {
+                mCourseName.setText(course.getTitle());
+            }
+        });
 
-
+        //Edit note button
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NoteDetailsActivity.this, EditNoteActivity.class);
+                intent.putExtra("NoteTitle", mNoteTitle.getText());
+                intent.putExtra("Note", mNote.getText());
+                intent.putExtra("CourseName", mCourseName.getText());
                 startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
@@ -96,6 +99,45 @@ public class NoteDetailsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    //Options menu in toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //Delete button in toolbar
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.DeleteButton:
+                mNoteViewModel.delete(mNoteID);
+                finish();
+                return true;
+            default :
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    //Save edited note details to database
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            String title = data.getStringExtra("NoteTitle");
+            String noteBody = data.getStringExtra("Note");
+            int courseID = data.getIntExtra("CourseID", -1);
+
+            Note note = new Note(title, noteBody, courseID);
+            mNoteViewModel.insert(note);
+
+            mNoteTitle.setText(title);
+            mNote.setText(noteBody);
+//            mCourseName.setText(courseName);
+        }
     }
 
 
