@@ -1,5 +1,8 @@
 package com.lindseyweberc196.Activity.Assessment;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -105,7 +108,7 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
     //Options menu in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.detail_actions, menu);
+        getMenuInflater().inflate(R.menu.alert_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -117,6 +120,17 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
                 mAssessmentViewModel.delete(mAssessmentID);
                 finish();
                 return true;
+
+                //TODO
+//            case R.id.AlertButton:
+//                Intent intent=new Intent(PartsDetail.this,MyReceiver.class);
+//                intent.putExtra("key","This is a short message");
+//                PendingIntent sender= PendingIntent.getBroadcast(PartsDetail.this,0,intent,0);
+//                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+//                date=Long.parseLong(mills.getText().toString());
+//                alarmManager.set(AlarmManager.RTC_WAKEUP, date, sender);
+//                return true;
+
             default :
                 return super.onOptionsItemSelected(item);
         }

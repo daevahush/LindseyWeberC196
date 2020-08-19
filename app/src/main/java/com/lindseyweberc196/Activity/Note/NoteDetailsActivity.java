@@ -105,7 +105,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
     //Options menu in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.detail_actions, menu);
+        getMenuInflater().inflate(R.menu.note_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -117,6 +117,19 @@ public class NoteDetailsActivity extends AppCompatActivity {
                 mNoteViewModel.delete(mNoteID);
                 finish();
                 return true;
+
+            case R.id.ShareButton:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is a note");
+                // (Optional) Here we're setting the title of the content
+                sendIntent.putExtra(Intent.EXTRA_TITLE, "Note Title");
+                sendIntent.setType("text/plain");
+
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
+
             default :
                 return super.onOptionsItemSelected(item);
         }

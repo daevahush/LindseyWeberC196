@@ -3,6 +3,7 @@ package com.lindseyweberc196.Activity.Term;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lindseyweberc196.Entity.Course;
@@ -23,6 +25,7 @@ import com.lindseyweberc196.UI.CourseAdapter;
 import com.lindseyweberc196.ViewModel.CourseViewModel;
 import com.lindseyweberc196.ViewModel.TermViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TermDetailsActivity extends AppCompatActivity {
@@ -107,9 +110,21 @@ public class TermDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.DeleteButton:
-                mTermViewModel.delete(mTermID);
-                finish();
-                return true;
+                mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
+                int tCourseID = (getIntent().getIntExtra("CourseID", 0));
+
+
+                if((mCourseViewModel.getAssociatedCourses(mTermID)) == null) {
+
+
+
+                    mTermViewModel.delete(mTermID);
+                    finish();
+                    return true;
+                } else {
+                    Toast.makeText(getApplicationContext(), "Can't delete a term with associated courses", Toast.LENGTH_LONG).show();
+                }
+
             default :
                 return super.onOptionsItemSelected(item);
         }

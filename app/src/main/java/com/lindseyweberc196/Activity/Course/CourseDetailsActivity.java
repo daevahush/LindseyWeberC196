@@ -1,5 +1,8 @@
 package com.lindseyweberc196.Activity.Course;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lindseyweberc196.Activity.Receiver;
 import com.lindseyweberc196.Activity.Term.EditTermActivity;
 import com.lindseyweberc196.Activity.Term.TermDetailsActivity;
 import com.lindseyweberc196.Database.StatusConverter;
@@ -46,6 +50,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private TextView mMentorPhone;
     private TextView mMentorEmail;
     private TextView mStatus;
+    long date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +130,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     //Options menu in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.detail_actions, menu);
+        getMenuInflater().inflate(R.menu.alert_actions, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -137,6 +142,17 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 mCourseViewModel.delete(mCourseID);
                 finish();
                 return true;
+
+                //TODO
+            case R.id.AlertButton:
+                Intent intent=new Intent(CourseDetailsActivity.this, Receiver.class);
+                intent.putExtra("key","This is a short message");
+                PendingIntent sender= PendingIntent.getBroadcast(CourseDetailsActivity.this,0,intent,0);
+                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                date=Long.parseLong(mEndDate.getText().toString());
+                alarmManager.set(AlarmManager.RTC_WAKEUP, date, sender);
+                return true;
+
             default :
                 return super.onOptionsItemSelected(item);
         }

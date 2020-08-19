@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <ScrollView
+        android:layout_width="394dp"
+        android:layout_height="342dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.231">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:labelFor="@id/CourseName"
+                android:text="@string/course" />
+
+            <EditText
+                android:id="@+id/CourseName"
+                android:layout_width="183dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="36dp"
+                android:contentDescription="@string/courseName"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/course_status" />
+
+            <RadioGroup
+                android:id="@+id/CourseStatus"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RadioButton
+                    android:id="@+id/InProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/in_progress" />
+
+                <RadioButton
+                    android:id="@+id/PlanToTake"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/plan_to_take" />
+
+                <RadioButton
+                    android:id="@+id/Completed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/completed" />
+
+                <RadioButton
+                    android:id="@+id/Dropped"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dropped" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:labelFor="@id/StartDate"
+                android:text="@string/start_date" />
+
+            <EditText
+                android:id="@+id/StartDate"
+                android:layout_width="184dp"
+                android:layout_height="39dp"
+                android:layout_marginTop="24dp"
+                android:importantForAutofill="no"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:labelFor="@id/EndDate"
+                android:text="@string/end_date" />
+
+            <EditText
+                android:id="@+id/EndDate"
+                android:layout_width="192dp"
+                android:layout_height="37dp"
+                android:layout_marginTop="24dp"
+                android:importantForAutofill="no"
+                android:inputType="date" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="196dp"
+                android:labelFor="@id/MentorName"
+                android:text="@string/mentor_name" />
+
+            <EditText
+                android:id="@+id/MentorName"
+                android:layout_width="169dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="44dp"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:labelFor="@id/MentorPhone"
+                android:text="@string/mentor_phone" />
+
+            <EditText
+                android:id="@+id/MentorPhone"
+                android:layout_width="169dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="36dp"
+                android:importantForAutofill="no"
+                android:inputType="text|phone" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="64dp"
+                android:labelFor="@id/MentorEmail"
+                android:text="@string/mentor_email" />
+
+            <EditText
+                android:id="@+id/MentorEmail"
+                android:layout_width="172dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="84dp"
+                android:layout_marginTop="40dp"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/select_a_term" />
+
+            <LinearLayout
+                android:id="@+id/TermsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+
+            <Button
+                android:id="@+id/SaveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
