@@ -10,7 +10,10 @@ import android.os.Build;
 import android.widget.Toast;
 import androidx.core.app.NotificationCompat;
 import com.lindseyweberc196.R;
-
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class Receiver extends BroadcastReceiver {
@@ -24,8 +27,8 @@ public class Receiver extends BroadcastReceiver {
 
         Notification n= new NotificationCompat.Builder(context, channel_id)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentText(intent.getStringExtra("key"))
-                .setContentTitle("Test of Notification with an id of :"+Integer.toString(notificationID)).build();
+                .setContentText(intent.getStringExtra("content"))
+                .setContentTitle(intent.getStringExtra("title")).build();
 
         NotificationManager notificationManager=(NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID++,n);
@@ -44,6 +47,18 @@ public class Receiver extends BroadcastReceiver {
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    //Convert date to milliseconds
+    public static long dateToMillis(String date) {
+
+        System.out.println(TimeZone.getDefault());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+        LocalDateTime localDate = LocalDateTime.parse(date + " 12:00", formatter);
+        long timeInMilliseconds = localDate.atOffset(ZoneOffset.UTC).toInstant().toEpochMilli();
+
+        return timeInMilliseconds;
     }
 
 }

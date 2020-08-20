@@ -27,4 +27,7 @@ public interface CourseDAO {
 
     @Query("SELECT * FROM course_table WHERE courseID = :courseID LIMIT 1")
     LiveData<Course> getCourseByID(int courseID);
+
+    @Query("SELECT COUNT(termID) FROM course_table WHERE termID = :termID")
+    int countAssociatedCourses(int termID);
 }

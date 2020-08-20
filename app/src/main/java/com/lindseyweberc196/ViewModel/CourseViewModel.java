@@ -21,6 +21,8 @@ public class CourseViewModel extends AndroidViewModel{
     public LiveData<List<Course>> getAllCourses() {return mAllCourses;}
     public LiveData<List<Course>> getAssociatedCourses(int termID) {return mRepository.getAssociatedCourses(termID);}
     public LiveData<Course> getCourseByID(int courseID) {return mRepository.getCourseByID(courseID);}
+    public int countAssociatedCourses(int ID) {return mRepository.countAssociatedCourses(ID);}
+
 
     public void insert(Course course) {mRepository.insert(course);}
 

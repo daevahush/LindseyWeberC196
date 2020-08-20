@@ -77,7 +77,7 @@ public abstract class EducationManagementDatabase extends RoomDatabase {
                 term = new Term(3,"Term 3","05/01/2021","12/01/2021");
                 mTermDao.insert(term);
 
-                Course course = new Course(1,1,"Mobile Application", "05/01/2020", "06/01/2020", Course.Status.INPROGRESS, "Tim", "727=867-5309", "email@email.com");
+                Course course = new Course(1,1,"Mobile Application", "05/01/2020", "08/20/2020", Course.Status.INPROGRESS, "Tim", "727=867-5309", "email@email.com");
                 mCourseDao.insert(course);
                 course = new Course(2,2,"Software 1", "05/01/2020", "06/01/2020", Course.Status.INPROGRESS, "Tim", "727=867-5309", "email@email.com");
                 mCourseDao.insert(course);

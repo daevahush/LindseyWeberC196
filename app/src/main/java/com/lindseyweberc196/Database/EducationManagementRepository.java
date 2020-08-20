@@ -44,6 +44,7 @@ public class EducationManagementRepository {
     public LiveData<List<Term>> getAllTerms() { return mAllTerms;}
     public LiveData<List<Course>> getAssociatedCourses(int termID) {return mCourseDAO.getAssociatedCourses(termID);}
     public LiveData<List<Course>> getAllCourses() {return mAllCourses;}
+    public int countAssociatedCourses(int ID) { return mCourseDAO.countAssociatedCourses(ID);}
     public LiveData<Course> getCourseByID(int ID) {return mCourseDAO.getCourseByID(ID);}
     public LiveData<List<Assessment>> getAssociatedAssessments(int courseID) {return mAssessmentDAO.getAssociatedAssessments(courseID);}
     public LiveData<List<Assessment>> getAllAssessments() {return mAllAssessments;}

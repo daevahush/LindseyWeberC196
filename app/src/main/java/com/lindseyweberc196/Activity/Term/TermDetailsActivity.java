@@ -27,6 +27,7 @@ import com.lindseyweberc196.ViewModel.TermViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TermDetailsActivity extends AppCompatActivity {
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
@@ -110,20 +111,33 @@ public class TermDetailsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.DeleteButton:
-                mCourseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-                int tCourseID = (getIntent().getIntExtra("CourseID", 0));
+                final AtomicBoolean deleted = new AtomicBoolean();
 
-
-                if((mCourseViewModel.getAssociatedCourses(mTermID)) == null) {
-
-
-
-                    mTermViewModel.delete(mTermID);
-                    finish();
-                    return true;
-                } else {
-                    Toast.makeText(getApplicationContext(), "Can't delete a term with associated courses", Toast.LENGTH_LONG).show();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if((mCourseViewModel.countAssociatedCourses(mTermID)) == 0) {
+                            mTermViewModel.delete(mTermID);
+                            deleted.set(true);
+                        } else {
+                            deleted.set(false);
+                        }
+                    }
+                });
+                thread.setPriority(10);
+                thread.start();
+                try {
+                    thread.join();
+                    if(deleted.get()) {
+                        finish();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Can't delete a term with associated courses", Toast.LENGTH_LONG).show();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                return true;
+
 
             default :
                 return super.onOptionsItemSelected(item);

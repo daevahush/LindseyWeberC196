@@ -22,4 +22,6 @@ public interface TermDAO {
     @Query("SELECT * FROM term_table ORDER BY termID ASC")
     LiveData<List<Term>> getAllTerms();
 
+
+
 }

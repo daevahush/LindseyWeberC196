@@ -5,35 +5,28 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lindseyweberc196.Activity.Receiver;
-import com.lindseyweberc196.Activity.Term.EditTermActivity;
-import com.lindseyweberc196.Activity.Term.TermDetailsActivity;
 import com.lindseyweberc196.Database.StatusConverter;
 import com.lindseyweberc196.Entity.Assessment;
 import com.lindseyweberc196.Entity.Course;
-import com.lindseyweberc196.Entity.Term;
 import com.lindseyweberc196.R;
 import com.lindseyweberc196.UI.AssessmentAdapter;
-import com.lindseyweberc196.UI.CourseAdapter;
 import com.lindseyweberc196.ViewModel.AssessmentViewModel;
 import com.lindseyweberc196.ViewModel.CourseViewModel;
-import com.lindseyweberc196.ViewModel.TermViewModel;
 
 import java.util.List;
 
@@ -50,7 +43,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
     private TextView mMentorPhone;
     private TextView mMentorEmail;
     private TextView mStatus;
-    long date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,13 +135,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 finish();
                 return true;
 
-                //TODO
             case R.id.AlertButton:
                 Intent intent=new Intent(CourseDetailsActivity.this, Receiver.class);
-                intent.putExtra("key","This is a short message");
+                intent.putExtra("content","Your course is ending today");
+                intent.putExtra("title", mCourseName.getText());
                 PendingIntent sender= PendingIntent.getBroadcast(CourseDetailsActivity.this,0,intent,0);
                 AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
-                date=Long.parseLong(mEndDate.getText().toString());
+                String dateToConvert = (getIntent().getStringExtra("EndDate"));
+                Toast.makeText(getApplicationContext(), "Alarm has been set for 8:00AM EST " + dateToConvert, Toast.LENGTH_LONG).show();
+                long date = Receiver.dateToMillis(dateToConvert);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, date, sender);
                 return true;
 

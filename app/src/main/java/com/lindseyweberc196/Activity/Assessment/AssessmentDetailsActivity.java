@@ -17,7 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.lindseyweberc196.Activity.Course.CourseDetailsActivity;
+import com.lindseyweberc196.Activity.Receiver;
 import com.lindseyweberc196.Database.AssessmentConverter;
 import com.lindseyweberc196.Database.StatusConverter;
 import com.lindseyweberc196.Entity.Assessment;
@@ -121,15 +124,17 @@ public class AssessmentDetailsActivity extends AppCompatActivity {
                 finish();
                 return true;
 
-                //TODO
-//            case R.id.AlertButton:
-//                Intent intent=new Intent(PartsDetail.this,MyReceiver.class);
-//                intent.putExtra("key","This is a short message");
-//                PendingIntent sender= PendingIntent.getBroadcast(PartsDetail.this,0,intent,0);
-//                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
-//                date=Long.parseLong(mills.getText().toString());
-//                alarmManager.set(AlarmManager.RTC_WAKEUP, date, sender);
-//                return true;
+            case R.id.AlertButton:
+                Intent intent=new Intent(AssessmentDetailsActivity.this, Receiver.class);
+                intent.putExtra("content","Your assessment is today");
+                intent.putExtra("title", mAssessmentName.getText());
+                PendingIntent sender= PendingIntent.getBroadcast(AssessmentDetailsActivity.this,0,intent,0);
+                AlarmManager alarmManager=(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                String dateToConvert = (getIntent().getStringExtra("Date"));
+                Toast.makeText(getApplicationContext(), "Alarm has been set for 8:00AM EST " + dateToConvert, Toast.LENGTH_LONG).show();
+                long date = Receiver.dateToMillis(dateToConvert);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, date, sender);
+                return true;
 
             default :
                 return super.onOptionsItemSelected(item);
